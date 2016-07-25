@@ -6,7 +6,7 @@ var itemNum;
 var itemId;
 var newAmount;
 var buyInfo;
-var updateAmount;
+//var updateAmount;
 
 //Syncs to MySQL
 var connection = mysql.createConnection({
@@ -64,6 +64,9 @@ var promptCustomer = function() {
 	}]).then(function(val) {
 		//set the VAR corrct to FALSE so as to amek sure the user inputs a valid product name
 		var correct = false;
+		if(name.choice == res[i].ItemID || res[i].ProductName){
+			var correct = true;
+		}
 
 		//loops through the MySQL table to check that the product they wanted exists
 		for(var i = 0; i < res.length; i++) {
@@ -77,7 +80,7 @@ var promptCustomer = function() {
 
 				inquirer.prompt([{
 					type: 'input',
-					name: 'choice2',
+					name: 'inventory',
 					message: 'How many would you like to buy?'
 				}]).then(function (val2) {
 					if(val2 <= itemNum) {
