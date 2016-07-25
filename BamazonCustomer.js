@@ -5,6 +5,8 @@ var path = require('path');
 var itemNum;
 var itemId;
 var newAmount;
+var buyInfo;
+var updateAmount;
 
 //Syncs to MySQL
 var connection = mysql.createConnection({
@@ -43,10 +45,14 @@ var makeTable = function() {
 	});
 }; 
 
-newAmount =function() {
-	connection.query();
-	console.log('Updating');
-};
+
+// updateAmount = 0;
+// newAmount = function() {
+// 	connection.query('Updated products ' + updateAmount + ' WHERE ItemID = ' + requestdItemId + '', function(err, res){
+
+//     });
+// 	console.log('Updating');
+// };
 
 //function containing all customer prompts
 var promptCustomer = function() {
@@ -54,7 +60,7 @@ var promptCustomer = function() {
 	inquirer.prompt([{
 		type: 'input',
 		name: 'choice',
-		message: 'what would you like to purchase?'
+		message: 'What is the Item ID of the product they would like to buy?'
 	}]).then(function(val) {
 		//set the VAR corrct to FALSE so as to amek sure the user inputs a valid product name
 		var correct = false;
@@ -63,7 +69,7 @@ var promptCustomer = function() {
 		for(var i = 0; i < res.length; i++) {
 			
 			//1. ToDo: if the product exists, set correct = true and ask the USER to see to many of the product they would like to buy
-			if(val.choice == res.productName) {
+			if(val.choice == res[i].itemId) {
 				correct = true;
 				console.log(res[i].StockQuantity);
 				itemNum = res[i].StockQuantity;
@@ -72,10 +78,12 @@ var promptCustomer = function() {
 				inquirer.prompt([{
 					type: 'input',
 					name: 'choice2',
-					message: 'What would you like to buy?'
+					message: 'How many would you like to buy?'
 				}]).then(function (val2) {
 					if(val2 <= itemNum) {
 						console.log('Great we have ' + itemNum);
+						
+						//2. ToDo: Check to see if the amount requested is less than the amount that is available
 						buyInfo = itemNum - val2.choice2;
 
 
@@ -85,7 +93,7 @@ var promptCustomer = function() {
 			}
 			
 
-			//2. ToDo: Check to see if the amount requested is less than the amount that is available
+			
 
 			//3. ToDo: Update the MySQL to reduce the StockQuantity by the amount requested - UPDATE command
 
