@@ -6,7 +6,9 @@ var itemNum;
 var itemId;
 var newAmount;
 var buyInfo;
-//var updateAmount;
+var sumAfterUpdate = 0;
+var requestdItemId = 0;
+var updateAmount;
 
 //Syncs to MySQL
 var connection = mysql.createConnection({
@@ -45,14 +47,13 @@ var makeTable = function() {
 	});
 }; 
 
-
-// updateAmount = 0;
-// newAmount = function() {
-// 	connection.query('Updated products ' + updateAmount + ' WHERE ItemID = ' + requestdItemId + '', function(err, res){
-
-//     });
-// 	console.log('Updating');
-// };
+//needs fixing
+updateAmount = function(){
+    console.log("update Function running");
+    connection.query('UPDATE products SET StockQuantity = ' + sumAfterUpdate + ' WHERE ItemID = ' + requestdItemId + '', function(err, res){
+    });
+    makeTable(); 
+}
 
 //function containing all customer prompts
 var promptCustomer = function() {
@@ -83,13 +84,16 @@ var promptCustomer = function() {
 					name: 'inventory',
 					message: 'How many would you like to buy?'
 				}]).then(function (val2) {
-					if(val2 <= itemNum) {
+					if(val2.inventory <= itemNum) {
 						console.log('Great we have ' + itemNum);
-						
+						sumAfterUpdate = requestedItem - val2.inventory;  
+      					
+
 						//2. ToDo: Check to see if the amount requested is less than the amount that is available
-						buyInfo = itemNum - val2.choice2;
-
-
+						//buyInfo = itemNum - val2.choice2;
+                        }else{ 
+                            console.log('This item is not in stock.');
+                            makeTable();
 					}
 				});
 
@@ -99,8 +103,9 @@ var promptCustomer = function() {
 			
 
 			//3. ToDo: Update the MySQL to reduce the StockQuantity by the amount requested - UPDATE command
-
-			//4. ToDo: Show the TABLE again by calling the cuntion that makes the table
+			updateAmount();
+			//4. ToDo: Show the TABLE again by calling the function that makes the table
+			makeTable();
 		}
 		//If the product requested does not exist, restarts PROMPT
 		if(i == res.length && correct == false){
