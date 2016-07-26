@@ -56,13 +56,14 @@ updateAmount = function(){
 }
 
 //function containing all customer prompts
-var promptCustomer = function() {
+var promptCustomer = function(res) {
 	//prompts user for what they want to purchase
 	inquirer.prompt([{
 		type: 'input',
 		name: 'choice',
 		message: 'What is the Item ID of the product they would like to buy?'
 	}]).then(function(val) {
+		console.log(val);
 		//set the VAR corrct to FALSE so as to amek sure the user inputs a valid product name
 		var correct = false;
 		if(name.choice == res[i].ItemID || res[i].ProductName){
