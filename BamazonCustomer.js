@@ -6,7 +6,7 @@ var itemNum;
 var itemId;
 var newAmount;
 var buyInfo;
-var sumAfterUpdate = 0;
+var newNum = 0;
 var requestdItemId = 0;
 var updateAmount;
 
@@ -50,7 +50,7 @@ var makeTable = function() {
 //needs fixing
 updateAmount = function(){
     console.log("update Function running");
-    connection.query('UPDATE products SET StockQuantity = ' + sumAfterUpdate + ' WHERE ItemID = ' + requestdItemId + '', function(err, res){
+    connection.query('Updates the new sum ' + newNum + ' WHERE ItemID = ' + requestdItemId + '', function(err, res){
     });
     makeTable(); 
 }
@@ -73,7 +73,7 @@ var promptCustomer = function() {
 		for(var i = 0; i < res.length; i++) {
 			
 			//1. ToDo: if the product exists, set correct = true and ask the USER to see to many of the product they would like to buy
-			if(val.choice == res[i].itemId) {
+			if(val.choice == res[i].ItemID) {
 				correct = true;
 				console.log(res[i].StockQuantity);
 				itemNum = res[i].StockQuantity;
@@ -86,7 +86,7 @@ var promptCustomer = function() {
 				}]).then(function (val2) {
 					if(val2.inventory <= itemNum) {
 						console.log('Great we have ' + itemNum);
-						sumAfterUpdate = requestedItem - val2.inventory;  
+						sumAfterUpdate = newNum - val2.inventory;  
       					
 
 						//2. ToDo: Check to see if the amount requested is less than the amount that is available
