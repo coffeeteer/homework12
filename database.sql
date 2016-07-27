@@ -26,23 +26,38 @@ SET time_zone = "+00:00";
 -- Table structure for table `products`
 --
 
-CREATE TABLE `products` (
-  `ItemID` int(11) NOT NULL,
-  `ProductName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `DepartmentName` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Price` decimal(10,0) DEFAULT NULL,
-  `StockQuantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE database bamazon;
+ USE bamazon;
+ 
+ CREATE TABLE products (
+	ItemID INT NOT NULL,
+    ProductName VARCHAR(45) NULL,
+    DepartmentName VARCHAR(45) NULL,
+    Price DECIMAL(15, 2),
+    StockQuantity INT(15),
+    PRIMARY KEY (ItemID)
+ );
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`ItemID`);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0001', 'apples', 'produce', 0.50, 45);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0002', 'oranges', 'produce', 0.55, 69);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0003', 'bananas', 'produce', 0.75, 202);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0004', 'Cookie-Dough-ice-cream', 'frozen', 4.75, 15);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0005', 'water-bottles', 'soft-drinks', 4.89, 58);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0006', 'coca-cola', 'soft-drinks', 1.75, 155);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0007', 'doz-eggs', 'dairy', 2.75, 41);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0008', 'entrepreneur', 'magazines', 4.85, 20);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0009', 'toothpaste', 'beauty', 1.89, 32);
+INSERT INTO `products` (`ItemID`, `ProductName`, `DepartmentName`, `Price`, `StockQuantity`) 
+VALUES ('0010', 'diet-pepsi', 'soft-drinks', 1.72, 130);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
