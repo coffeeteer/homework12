@@ -1,2 +1,2 @@
 Read me file
-![Alt text](/tableImage.png?raw=true "Table Image")
+![Alt text](homework12/tableImage.png?raw=true "Table Image")
