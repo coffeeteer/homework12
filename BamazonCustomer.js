@@ -50,7 +50,11 @@ var makeTable = function() {
 //needs fixing
 updateAmount = function(){
     console.log("update Function running");
-    connection.query('Updates the new sum ' + newNum + ' WHERE ItemID = ' + requestdItemId + '', function(err, res){
+
+// sumafterupdate variable
+
+
+    connection.query('UPDATE products SET StockQuantity = ' + sumAfterUpdate + ' WHERE ItemID = ' + requestdItemId + '', function(err, res){
     });
     makeTable(); 
 }
@@ -63,22 +67,40 @@ var promptCustomer = function(res) {
 		name: 'choice',
 		message: 'What is the Item ID of the product they would like to buy?'
 	}]).then(function(val) {
-		console.log(val);
+
+		//console.log("THIS RUNS");
+
+		//console.log(val);
 		//set the VAR corrct to FALSE so as to amek sure the user inputs a valid product name
 		var correct = false;
-		if(name.choice == res[i].ItemID || res[i].ProductName){
-			var correct = true;
-		}
+
+		//console.log(res[2].ItemID);
+	
+		//console.log(val.choice);
 
 		//loops through the MySQL table to check that the product they wanted exists
-		for(var i = 0; i < res.length; i++) {
+		for(i = 0; i < res.length; i++) {
+
+			//console.log(res[i].ItemID);
+			//console.log(val.choice);
+
+			if(val.choice == res[i].ItemID || res[i].ProductName){
+				var correct = true;
+
+				//console.log("you chose item " + val.choice);
 			
+			}
+
+
 			//1. ToDo: if the product exists, set correct = true and ask the USER to see to many of the product they would like to buy
 			if(val.choice == res[i].ItemID) {
 				correct = true;
 				console.log(res[i].StockQuantity);
 				itemNum = res[i].StockQuantity;
 				itemId = res[i].ItemID;
+				requestdItemId = res[i].ItemID;
+				console.log("THIS IS ITTTTTTTTTTTTT: " + requestdItemId);
+
 
 				inquirer.prompt([{
 					type: 'input',
@@ -87,14 +109,17 @@ var promptCustomer = function(res) {
 				}]).then(function (val2) {
 					if(val2.inventory <= itemNum) {
 						console.log('Great we have ' + itemNum);
-						sumAfterUpdate = newNum - val2.inventory;  
+						sumAfterUpdate = itemNum - val2.inventory;  
       					
 
+
+
+						updateAmount();
 						//2. ToDo: Check to see if the amount requested is less than the amount that is available
 						//buyInfo = itemNum - val2.choice2;
                         }else{ 
                             console.log('This item is not in stock.');
-                            makeTable();
+                            //makeTable();
 					}
 				});
 
@@ -104,9 +129,9 @@ var promptCustomer = function(res) {
 			
 
 			//3. ToDo: Update the MySQL to reduce the StockQuantity by the amount requested - UPDATE command
-			updateAmount();
+			//updateAmount();
 			//4. ToDo: Show the TABLE again by calling the function that makes the table
-			makeTable();
+			//makeTable();
 		}
 		//If the product requested does not exist, restarts PROMPT
 		if(i == res.length && correct == false){
