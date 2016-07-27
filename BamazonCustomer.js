@@ -99,7 +99,7 @@ var promptCustomer = function(res) {
 				itemNum = res[i].StockQuantity;
 				itemId = res[i].ItemID;
 				requestdItemId = res[i].ItemID;
-				console.log("THIS IS ITTTTTTTTTTTTT: " + requestdItemId);
+				console.log( requestdItemId);
 
 
 				inquirer.prompt([{
